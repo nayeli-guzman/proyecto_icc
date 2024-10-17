@@ -26,7 +26,6 @@ print("El vocabulario es:")
 print("La cantidad de tokens es:")
 print(len(sorted(vector.vocabulary_)))
 
-
 # --------- df tfidf matrix
 
 print("Matriz de frecuencias:")
@@ -39,4 +38,4 @@ clustersList = km.fit_predict(frequencyMatrix)
 print(clustersList)
 frequencyMatrix["Cluster"] = clustersList
 
-frequencyMatrix.to_csv("pokemons agrupados")
+frequencyMatrix.to_csv("pokemons agrupados.csv")
