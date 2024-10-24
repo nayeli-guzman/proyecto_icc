@@ -15,21 +15,22 @@ data.drop(["url"], axis=1, inplace=True)
 # --------- types
 
 types = [
-    "Normal", "Fire", "Water", "Electric", "Grass", "Ice", 
-    "Fighting", "Poison", "Ground", "Flying", "Psychic", 
-    "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", 
-    "Fairy"
+    "normal", "fire", "water", "electric", "grass", "ice", 
+    "fighting", "poison", "ground", "flying", "psychic", 
+    "bug", "rock", "ghost", "dragon", "dark", "steel", 
+    "fairy"
 ]
 
-data["moves"] = data["moves"].str.extractall("(" + "|".join(types) + ")")[0].groupby(level=0).apply(" ".join)
-data["moves"].fillna("", inplace=True) 
-print(data)
+data["moves"] = data["moves"].str.lower().str.extractall("(" + "|".join(types) + ")")[0].groupby(level=0).apply(" ".join)
+data["moves"] = data["moves"].fillna("")
+data["moves"] = data["moves"].astype(str)
 
 # --------- generating tfidf matrix
 
 vector = TfidfVectorizer(stop_words=stopWords, ngram_range=(1,1))
 x = vector.fit_transform(data["moves"])
-frequencyMatrix = pd.DataFrame(data=x.toarray(), columns=sorted(vector.vocabulary_))
+frequencyMatrix = pd.DataFrame(data=x.toarray(), 
+                               columns=sorted(vector.vocabulary_))
 
 # --------- tokens
 
